@@ -9,7 +9,17 @@ function App() {
     <div>
 
       <Routes>
-      <Route path="/"  element ={<Layouts />}  />
+        <Route path="/" element={<Layouts>
+          <p>
+            home page
+          </p>
+        </Layouts>} />
+        <Route path="/search" element={<Layouts>
+          <p>
+
+            Search page
+          </p>
+        </Layouts>} />
       </Routes>
     </div>
 
