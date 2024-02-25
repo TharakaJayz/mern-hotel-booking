@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import Layouts from "./layouts/Layouts"
+import Register from "./pages/Register"
 
 
 function App() {
@@ -20,6 +21,11 @@ function App() {
             Search page
           </p>
         </Layouts>} />
+        <Route path="/register" element={<Layouts>
+
+          <Register />
+        </Layouts>
+        } />
       </Routes>
     </div>
 

@@ -9,7 +9,7 @@ interface Props {
 
 const Layouts = ({ children }: Props) => {
     return (
-        <div className='felx flex-col min-h-screen'>
+        <div className='flex flex-col min-h-screen'>
             <Header />
             <Hero />
             <div className='container mx-auto py-10 flex-1'>
