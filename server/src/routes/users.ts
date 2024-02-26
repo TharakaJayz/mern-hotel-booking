@@ -43,6 +43,7 @@ router.post(
       });
 
       res.sendStatus(200);
+      console.log("respond",res)
     } catch (err: any) {
       console.log("This is /register error", err);
       res.status(500).send({ message: "Something went wrong" });
