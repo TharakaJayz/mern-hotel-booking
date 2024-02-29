@@ -15,5 +15,5 @@ export const register = async (formData: RegisterFormData) => {
     console.log("error",responseBody.message)
     throw new Error(responseBody.message);
   }
-  console.log("response body", responseBody);
+  
 };

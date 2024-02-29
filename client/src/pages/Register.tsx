@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppDispatch } from "../hooks/hooks";
+import { toastActions } from "../store/Toast-slice";
+
 
 export type RegisterFormData = {
     firstName: string,
@@ -13,14 +16,17 @@ export type RegisterFormData = {
 const Register = () => {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
+    const dispatch = useAppDispatch();
 
     const mutation = useMutation(apiClient.register, {
         onSuccess: () => {
-            console.log("registration successfull")
+            console.log("registration successfull");
+            dispatch(toastActions.add({message:"registration success",type:"SUCCESS"}))
 
         },
         onError: (error: Error) => {
             console.log("fetch post error", error.message)
+            dispatch(toastActions.add({message:error.message,type:"ERROR"}))
         }
     })
 
@@ -48,7 +54,7 @@ const Register = () => {
             </div>
 
             <label className="text-gray-700 text-sm font-bold flex-1">Email
-                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("email", { required: "This field is required" })} type="email" />
+                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("email", { required: "This field is required", })} type="email" />
                 {errors.email && (
                     <span className="text-red-500">{errors.email.message}</span>
                 )}

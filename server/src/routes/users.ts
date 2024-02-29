@@ -42,10 +42,10 @@ router.post(
         maxAge: 86400000,
       });
 
-      res.sendStatus(200);
-      console.log("respond",res)
+      res.status(200).send({ message: "user register ok" });
+      
     } catch (err: any) {
-      console.log("This is /register error", err);
+    
       res.status(500).send({ message: "Something went wrong" });
     }
   }
