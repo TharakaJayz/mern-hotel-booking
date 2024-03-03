@@ -6,17 +6,16 @@ import { useAppDispatch, useAppSeleter } from "./hooks/hooks"
 import Toast from "./components/Toast"
 import { toastActions } from "./store/Toast-slice"
 import { RootState } from "./store/store"
-
-
+import SignIn from "./pages/SignIn"
 function App() {
 
   const toast = useAppSeleter((state: RootState) => state.toasts);
-
   const dispatch = useAppDispatch();
   const toastDispatch = () => {
     dispatch(toastActions.add({ message: "", type: "" }))
 
   }
+
 
 
   return (
@@ -37,6 +36,11 @@ function App() {
         <Route path="/register" element={<Layouts>
 
           <Register />
+        </Layouts>
+        } />
+        <Route path="/sign-in" element={<Layouts>
+
+          <SignIn />
         </Layouts>
         } />
       </Routes>

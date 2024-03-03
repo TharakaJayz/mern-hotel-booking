@@ -4,6 +4,7 @@ import * as apiClient from "../api-client";
 import { useAppDispatch } from "../hooks/hooks";
 import { toastActions } from "../store/Toast-slice";
 import { useNavigate } from "react-router-dom";
+import { userActions } from "../store/User-slice";
 
 
 export type RegisterFormData = {
@@ -20,16 +21,19 @@ const Register = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigate();
 
+
     const mutation = useMutation(apiClient.register, {
         onSuccess: () => {
-            console.log("registration successfull");
-            dispatch(toastActions.add({message:"registration success",type:"SUCCESS"}));
-            navigation("/")
+  
+            dispatch(toastActions.add({ message: "registration success", type: "SUCCESS" }));
+            dispatch(userActions.add({isLogged:true}));
+            navigation("/");
+            
 
         },
         onError: (error: Error) => {
-            console.log("fetch post error", error.message)
-            dispatch(toastActions.add({message:error.message,type:"ERROR"}))
+          
+            dispatch(toastActions.add({ message: error.message, type: "ERROR" }))
         }
     })
 
