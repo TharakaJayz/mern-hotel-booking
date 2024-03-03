@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface InitialStateInterface {
   message: string;
-  type: "SUCCESS" | "ERROR" | string;
+  type: "SUCCESS" | "ERROR" | string ;
 }
 
-interface AddReducerPayloadInterface {
+export  interface AddReducerPayloadInterface {
     message: string;
-  type: "SUCCESS" | "ERROR" ;
+    type: "SUCCESS" | "ERROR" | string;
 }
 
 const initialState: InitialStateInterface = {

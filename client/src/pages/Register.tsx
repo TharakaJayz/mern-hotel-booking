@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppDispatch } from "../hooks/hooks";
 import { toastActions } from "../store/Toast-slice";
+import { useNavigate } from "react-router-dom";
 
 
 export type RegisterFormData = {
@@ -17,11 +18,13 @@ const Register = () => {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
     const dispatch = useAppDispatch();
+    const navigation = useNavigate();
 
     const mutation = useMutation(apiClient.register, {
         onSuccess: () => {
             console.log("registration successfull");
-            dispatch(toastActions.add({message:"registration success",type:"SUCCESS"}))
+            dispatch(toastActions.add({message:"registration success",type:"SUCCESS"}));
+            navigation("/")
 
         },
         onError: (error: Error) => {

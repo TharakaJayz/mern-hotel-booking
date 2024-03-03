@@ -5,7 +5,8 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
-import { store } from './store/store.ts'
+import {  store } from './store/store.ts'
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,6 +15,8 @@ const queryClient = new QueryClient({
     }
   }
 })
+
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
