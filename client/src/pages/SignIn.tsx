@@ -5,7 +5,7 @@ import * as apiClient from "../api-client";
 import { useAppDispatch } from '../hooks/hooks';
 import { toastActions } from '../store/Toast-slice';
 import { userActions } from '../store/User-slice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -15,25 +15,25 @@ export type LoginFormData = {
 }
 
 const SignIn = () => {
-    const { register,handleSubmit,formState:{errors} } = useForm<LoginFormData>();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
     const dispatch = useAppDispatch();
     const navigation = useNavigate();
 
-    const mutation = useMutation(apiClient.signIn,{
-        onSuccess:()=>{
-            
+    const mutation = useMutation(apiClient.signIn, {
+        onSuccess: () => {
+
             dispatch(toastActions.add({ message: "SignIn successful !", type: "SUCCESS" }));
-            dispatch(userActions.add({isLogged:true}));
+            dispatch(userActions.add({ isLogged: true }));
             navigation("/");
         },
-        onError:(error:Error)=>{
-           
+        onError: (error: Error) => {
+
             dispatch(toastActions.add({ message: error.message, type: "ERROR" }))
         }
     })
 
-    const onSubmit = handleSubmit((data)=>{
-        
+    const onSubmit = handleSubmit((data) => {
+
         mutation.mutate(data);
     })
     return (
@@ -53,7 +53,8 @@ const SignIn = () => {
                     <span className="text-red-500">{errors.password.message}</span>
                 )}
             </label>
-            <span>
+            <span className='flex justify-between items-center'>
+                <span className='text-sm  '>Not Registerd? <Link className='hover:text-purple-700 underline' to="/register">Create an acount here</Link></span>
                 <button type="submit" className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl">Create Account</button>
             </span>
 
