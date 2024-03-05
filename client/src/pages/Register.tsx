@@ -61,13 +61,13 @@ const Register = () => {
             </div>
 
             <label className="text-gray-700 text-sm font-bold flex-1">Email
-                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("email", { required: "This field is required", })} type="email" />
+                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("email", { required: "This field is required", })} type="email" name="email" />
                 {errors.email && (
                     <span className="text-red-500">{errors.email.message}</span>
                 )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">Password
-                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("password", { required: "This field is required", minLength: { value: 5, message: "Password must be at least 5 characters" } })} type="password" />
+                <input className="border rounded w-full py-1 px-2 font-normal "  {...register("password", { required: "This field is required", minLength: { value: 5, message: "Password must be at least 5 characters" } })} type="password" name="password" />
                 {errors.password && (
                     <span className="text-red-500">{errors.password.message}</span>
                 )}
