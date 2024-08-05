@@ -7,6 +7,7 @@ import Toast from "./components/Toast"
 import { toastActions } from "./store/Toast-slice"
 import { RootState } from "./store/store"
 import SignIn from "./pages/SignIn"
+import { AddHotel } from "./pages/AddHotel"
 function App() {
 
   const toast = useAppSeleter((state: RootState) => state.toasts);
@@ -16,12 +17,18 @@ function App() {
 
   }
 
+  const isLoggedIn = useAppSeleter((state)=> state.user.isLogged);
 
 
   return (
     <div>
       {toast.message.length > 0 && (<Toast message={toast.message} type={toast.type} onClose={toastDispatch} />)}
       <Routes>
+
+        {isLoggedIn && <>
+        <Route path="add-hotel" element  = {
+          <AddHotel />
+        }/></>}
         <Route path="/" element={<Layouts>
           <p>
             home page
