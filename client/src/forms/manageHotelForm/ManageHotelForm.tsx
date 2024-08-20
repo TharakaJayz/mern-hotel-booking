@@ -1,9 +1,7 @@
-import React from 'react'
+
 import { FormProvider, useForm } from 'react-hook-form'
 
-interface Props {
-    
-}
+
 
 export type HotelFormData  = {
     name:string,
@@ -19,7 +17,7 @@ export type HotelFormData  = {
     childCount:number,
 }
 
-export const ManageHotelForm = (props: Props) => {
+export const ManageHotelForm = () => {
     const formMethods = useForm<HotelFormData>();
 
     return (
