@@ -35,6 +35,7 @@ const Register = () => {
           
             dispatch(toastActions.add({ message: error.message, type: "ERROR" }))
         }
+        //tt
     })
 
     const onSubmit = handleSubmit((data) => {
