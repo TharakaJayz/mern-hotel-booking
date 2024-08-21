@@ -10,3 +10,5 @@
   interface ImportMeta {
     readonly env: ImportMetaEnv;
   }
+
+  declare module 'react-dom/client'
