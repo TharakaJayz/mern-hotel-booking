@@ -36,7 +36,7 @@ router.post(
       .isArray()
       .withMessage("imageUrls are required"),
   ],
-  upload.array("imageFiles", 6),
+  upload.array("imageFiles", 6), // except array called imageFiles with 6 string values and will aded those into request
   async (req: Request, res: Response) => {
     try {
       const imageFiles = req.files as Express.Multer.File[];

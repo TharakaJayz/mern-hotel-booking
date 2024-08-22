@@ -1,59 +1,85 @@
-import { Route, Routes } from "react-router-dom"
-import Layouts from "./layouts/Layouts"
-import Register from "./pages/Register"
-import { useAppDispatch, useAppSeleter } from "./hooks/hooks"
+import { Route, Routes } from "react-router-dom";
+import Layouts from "./layouts/Layouts";
+import Register from "./pages/Register";
+import { useAppDispatch, useAppSeleter } from "./hooks/hooks";
 
-import Toast from "./components/Toast"
-import { toastActions } from "./store/Toast-slice"
-import { RootState } from "./store/store"
-import SignIn from "./pages/SignIn"
-import { AddHotel } from "./pages/AddHotel"
+import Toast from "./components/Toast";
+import { toastActions } from "./store/Toast-slice";
+import { RootState } from "./store/store";
+import SignIn from "./pages/SignIn";
+import { AddHotel } from "./pages/AddHotel";
+
 function App() {
-
   const toast = useAppSeleter((state: RootState) => state.toasts);
   const dispatch = useAppDispatch();
   const toastDispatch = () => {
-    dispatch(toastActions.add({ message: "", type: "" }))
+    dispatch(toastActions.add({ message: "", type: "" }));
+  };
 
-  }
+  const isLoggedIn = useAppSeleter((state) => state.user.isLogged);
 
-  const isLoggedIn = useAppSeleter((state)=> state.user.isLogged);
-
-
+  console.log(" is Loggin==>>", isLoggedIn);
   return (
     <div>
-      {toast.message.length > 0 && (<Toast message={toast.message} type={toast.type} onClose={toastDispatch} />)}
+      {toast.message.length > 0 && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={toastDispatch}
+        />
+      )}
       <Routes>
+        {true && (
+          <>
+            <Route
+              path="/add-hotel"
+              element={
+                <Layouts>
+                  <AddHotel />
+                </Layouts>
+              }
+            />
+          </>
+        )}
 
-        {isLoggedIn && <>
-        <Route path="add-hotel" element  = {
-          <AddHotel />
-        }/></>}
-        <Route path="/" element={<Layouts>
-          <p>
-            home page
-          </p>
-        </Layouts>} />
-        <Route path="/search" element={<Layouts>
-          <p>
+        <Route
+          path="/search"
+          element={
+            <Layouts>
+              <p>Search page</p>
+            </Layouts>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Layouts>
+              <Register />
+            </Layouts>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <Layouts>
+              <SignIn />
+            </Layouts>
+          }
+        />
 
-            Search page
-          </p>
-        </Layouts>} />
-        <Route path="/register" element={<Layouts>
+        <Route
+          path="/"
+          element={
+            <Layouts>
+              <p>home page</p>
+            </Layouts>
+          }
+        />
 
-          <Register />
-        </Layouts>
-        } />
-        <Route path="/sign-in" element={<Layouts>
-
-          <SignIn />
-        </Layouts>
-        } />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </div>
-
-  )
+  );
 }
 
-export default App
+export default App;
