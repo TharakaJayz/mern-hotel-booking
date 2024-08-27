@@ -18,9 +18,7 @@ const GuestsSection = () => {
             type="number"
             min={1}
           />
-          {errors.adultCount && (
-            <span className="text-red-500">{errors.adultCount.message}</span>
-          )}
+          
         </label>
         <label className="text-gray-700 text-sm font-bold w-[100%] md:w-[50%]  md:max-w-[50%]">
           Children
@@ -30,9 +28,7 @@ const GuestsSection = () => {
             type="number"
             min={1}
           />
-          {errors.childCount && (
-            <span className="text-red-500">{errors.childCount.message}</span>
-          )}
+        
         </label>
       </div>
       {errors.childCount && (
