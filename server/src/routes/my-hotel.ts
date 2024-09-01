@@ -43,9 +43,11 @@ router.post(
       const newHotel: HotelType = req.body;
 
       const uploadPromises = imageFiles.map(async (image) => {
+
         const b64 = Buffer.from(image.buffer).toString("base64");
-        let dataURL = "data" + image.mimetype + ";base64," + b64;
-        const res = await cloudinary.v2.uploader.upload(dataURL);
+        let dataURL = "data:" + image.mimetype + ";base64," + b64;
+        const res = await cloudinary.v2.uploader.upload(dataURL); 
+
         return res.url;
       });
 
@@ -58,11 +60,10 @@ router.post(
       await hotel.save();
       res.status(201).send(hotel);
     } catch (err) {
-      console.log("erro creating hotel", err);
+      console.log("error creating hotel", err);
       res.status(500).json({ message: "something went wrong" });
     }
   }
 );
-
 
 export default router;
