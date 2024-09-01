@@ -18,7 +18,7 @@ export const hotelTypes = [
 
 
 export const hotelFacilities = [
-    "Free WiFi",
+    "Free Wifi",
     "Parking",
     "Airport Shuttle",
     "Family Rooms",

@@ -14,12 +14,13 @@ const FacilitiesSection = () => {
       <div className="grid grid-cols-5 gap-3">
         {hotelFacilities.map((facility) => (
           <label
-            htmlFor=""
+           
             className={clsx(`text-sm flex gap-1 text-gray-700`)}
           >
             <input
               type="checkbox"
               value={facility}
+             
               {...register("facilities", {
                 validate: (facilities) => {
                   if (facilities && facilities.length > 0) {
