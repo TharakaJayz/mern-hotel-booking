@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -31,6 +31,12 @@ app.use(express.static(path.join(__dirname,"../../client/dist")))
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", hotelRoutes);
+
+app.get("*", (req:Request,res:Response) =>{
+    res.sendFile(path.join(__dirname,"../../client/dist/index.html"))  
+
+    // serve files that used to testing when deploying
+})
 
 app.listen(8060, () => {
   console.log("connected 8060!");
