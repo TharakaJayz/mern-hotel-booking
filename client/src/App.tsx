@@ -8,6 +8,7 @@ import { toastActions } from "./store/Toast-slice";
 import { RootState } from "./store/store";
 import SignIn from "./pages/SignIn";
 import { AddHotel } from "./pages/AddHotel";
+import MyHotels from "./pages/MyHotels";
 
 function App() {
   const toast = useAppSeleter((state: RootState) => state.toasts);
@@ -36,6 +37,14 @@ function App() {
               element={
                 <Layouts>
                   <AddHotel />
+                </Layouts>
+              }
+            />
+            <Route
+              path="/my-hotels"
+              element={
+                <Layouts>
+                  <MyHotels />
                 </Layouts>
               }
             />
