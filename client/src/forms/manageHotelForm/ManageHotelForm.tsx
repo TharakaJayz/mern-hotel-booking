@@ -4,6 +4,8 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import { HotelType } from "../../../../server/src/shared/types";
+import { useEffect } from 'react';
 
 export type HotelFormData = {
   name: string;
@@ -15,27 +17,38 @@ export type HotelFormData = {
   starRating: number;
   facilities: string[];
   imageFiles: FileList;
+  imageUrls:string[];
   adultCount: number;
   childCount: number;
+
 };
 
 type ManageHotelFormProps = {
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
+  hotel?:HotelType
 };
 
 export const ManageHotelForm: React.FC<ManageHotelFormProps> = ({
   onSave,
   isLoading,
+  hotel
 }) => {
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit ,reset} = formMethods;
+
+  useEffect(() => {
+    reset(hotel) // when if got values for hotel then form will reset to those values 
+  }, [hotel,reset])
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     // create new FormData object & call our API
     // need to use formData type because we are sending images to backend
     
     const formData = new FormData();
+    if(hotel){
+      formData.append("hotelId",hotel._id)
+    }
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -61,6 +74,11 @@ export const ManageHotelForm: React.FC<ManageHotelFormProps> = ({
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
+    if(formDataJson.imageUrls){
+      formDataJson.imageUrls.forEach((url,index)=>{
+        formData.append(`imageUrls[${index}]`,url)
+      })
+    }
     // Array.from  creates an array of imageFiles
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
