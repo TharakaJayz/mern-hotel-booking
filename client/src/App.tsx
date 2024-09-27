@@ -10,6 +10,7 @@ import SignIn from "./pages/SignIn";
 import { AddHotel } from "./pages/AddHotel";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
+import Search from "./pages/Search";
 
 function App() {
   const toast = useAppSeleter((state: RootState) => state.toasts);
@@ -64,7 +65,7 @@ function App() {
           path="/search"
           element={
             <Layouts>
-              <p>Search page</p>
+              <Search />
             </Layouts>
           }
         />
