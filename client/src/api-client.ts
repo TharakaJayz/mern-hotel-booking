@@ -91,7 +91,7 @@ export const fetchMyHotels = async (): Promise<HotelType[]> => {
   return response.json();
 };
 
-export const fetchMyHotelById = async (hotelId: string):Promise<HotelType> => {
+export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
   const response = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelId}`, {
     credentials: "include",
   });
@@ -103,44 +103,63 @@ export const fetchMyHotelById = async (hotelId: string):Promise<HotelType> => {
   return response.json();
 };
 
-export const updateMyHotelById = async(hotelFormData:FormData) =>{
-  const response = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelFormData.get("hotelId")}`, {
-    method:"PUT",
-    body:hotelFormData,
-    credentials: "include",
-  });
+export const updateMyHotelById = async (hotelFormData: FormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/my-hotels/${hotelFormData.get("hotelId")}`,
+    {
+      method: "PUT",
+      body: hotelFormData,
+      credentials: "include",
+    }
+  );
 
   if (!response.ok) {
     throw new Error(`Error updating hotel`);
   }
 
   return response.json();
-}
-
+};
 
 export type SearchParams = {
-  destination:string;
-  checkIn:string;
-  checkOut:string;
-  adultCount:string;
-  childCount:string;
-  page:string;
-}
+  destination: string;
+  checkIn: string;
+  checkOut: string;
+  adultCount: string;
+  childCount: string;
+  page: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOptions?: string;
+};
 
-export const searchHotels = async(searchParams:SearchParams):Promise<HotelSearchResponse> =>{
+export const searchHotels = async (
+  searchParams: SearchParams
+): Promise<HotelSearchResponse> => {
   const queryParms = new URLSearchParams();
-  queryParms.append("destination", searchParams.destination || "")
-  queryParms.append("checkIn", searchParams.checkIn || "")
-  queryParms.append("checkOut", searchParams.checkOut || "")
-  queryParms.append("adultCount", searchParams.adultCount || "")
-  queryParms.append("childCount", searchParams.childCount || "")
+  queryParms.append("destination", searchParams.destination || "");
+  queryParms.append("checkIn", searchParams.checkIn || "");
+  queryParms.append("checkOut", searchParams.checkOut || "");
+  queryParms.append("adultCount", searchParams.adultCount || "");
+  queryParms.append("childCount", searchParams.childCount || "");
   queryParms.append("page", searchParams.page || "");
 
-  const response = await fetch(`${API_BASE_URL}/api/hotels/search?${queryParms}`);
-  if(!response.ok){
+  queryParms.append("maxPrice", searchParams.maxPrice || "");
+  queryParms.append("sortOptions", searchParams.sortOptions || "");
+
+  searchParams.facilities?.forEach((facility) =>
+    queryParms.append("facilities", facility)
+  );
+  searchParams.types?.forEach((type) => queryParms.append("types", type));
+  searchParams.stars?.forEach((star) => queryParms.append("stars", star));
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/search?${queryParms}`
+  );
+  if (!response.ok) {
     throw new Error("Error fetching Hotels");
   }
 
   return response.json();
-}
-
+};
