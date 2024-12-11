@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSeleter } from "../hooks/hooks";
 import { RootState } from "../store/store";
 import { searchActions } from "../store/Search-slice";

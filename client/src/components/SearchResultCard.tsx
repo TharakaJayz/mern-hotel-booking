@@ -1,4 +1,3 @@
-import React from "react";
 import { HotelType } from "../../../server/src/shared/types";
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";

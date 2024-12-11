@@ -9,7 +9,7 @@ router.get("/search", async (req: Request, res: Response) => {
     const query = constructSearchQuery(req.query);
     let sortOptions = {};
 
-    switch (req.query.sortOption) {
+    switch (req.query.sortOptions) {
       case "starRating":
         sortOptions = { starRating: -1 }; // -1 means sorting qury to high to low starRating
         break;
