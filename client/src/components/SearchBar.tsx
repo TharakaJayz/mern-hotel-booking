@@ -18,9 +18,9 @@ const SearchBar = () => {
 
   const [checkOut, setCheckOut] = useState<Date>(searchState.checkOut);
 
-  const [adultCount, setAdultCount] = useState<number>(searchState.adultCount);
+  const [adultCount, setAdultCount] = useState<number>(searchState.adultCount || 1);
 
-  const [childCount, setChildCount] = useState<number>(searchState.childCount);
+  const [childCount, setChildCount] = useState<number>(searchState.childCount || 0);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -67,7 +67,7 @@ const SearchBar = () => {
             </label>
             <label className="items-center flex">
                 Children:
-                <input type="number" className="w-full p-1 focus:outline-none font-bold" min={1}  max={20} value={childCount}  onChange={(event)=>{setChildCount(parseInt(event.target.value))}} />
+                <input type="number" className="w-full p-1 focus:outline-none font-bold" min={0}  max={20} value={childCount}  onChange={(event)=>{setChildCount(parseInt(event.target.value))}} />
             </label>
         </div>
         <div>
@@ -79,7 +79,7 @@ const SearchBar = () => {
                 />
         </div>
         <div className="flex gap-1">
-            <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500">Search</button>
+            <button className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-500" name="Search">Search</button>
             <button className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500">Clear</button>
         </div>
       </form>
