@@ -1,8 +1,19 @@
 import express, { Request, Response } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
+import { param } from "express-validator";
 
 const router = express.Router();
+
+router.get("/:id",[
+  param("id").notEmpty().withMessage("Hotel ID is required")
+], async (req:Request,res:Response)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+})
 
 router.get("/search", async (req: Request, res: Response) => {
   try {
