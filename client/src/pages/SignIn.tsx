@@ -5,7 +5,7 @@ import * as apiClient from "../api-client";
 import { useAppDispatch } from '../hooks/hooks';
 import { toastActions } from '../store/Toast-slice';
 import { userActions } from '../store/User-slice';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -18,13 +18,13 @@ const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
     const dispatch = useAppDispatch();
     const navigation = useNavigate();
-
+    const location = useLocation()
     const mutation = useMutation(apiClient.signIn, {
         onSuccess: () => {
 
             dispatch(toastActions.add({ message: "SignIn successful !", type: "SUCCESS" }));
             dispatch(userActions.add({ isLogged: true }));
-            navigation("/");
+            navigation(location.state?.from?.pathname || "/");
         },
         onError: (error: Error) => {
 

@@ -56,9 +56,9 @@ test("should display hotels", async ({ page }) => {
   await page.goto(`${UI_URL}my-hotels`);
 
   await expect(
-    page.getByRole("heading", { name: "Dublin Getaways" })
+    page.getByRole("heading", { name: "Dublin Getaways updated" })
   ).toBeVisible();
-  await expect(page.getByText("Lorem ipsum dolor sit ame")).toBeVisible(); // checking the part of the paragraph will be visible or not
+  await expect(page.getByText("Lorem ipsum dolor sit amet")).toBeVisible(); // checking the part of the paragraph will be visible or not
 
   await expect(page.getByText("Dublin, Ireland")).toBeVisible();
   await expect(page.getByText("All Inclusive")).toBeVisible();

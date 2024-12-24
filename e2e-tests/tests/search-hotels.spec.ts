@@ -29,3 +29,31 @@ test("Should show hotel search results", async ({ page }) => {
   await expect(page.getByText("Hotels found in Dublin")).toBeVisible();
   await expect(page.getByText("Dublin Getaways updated")).toBeVisible();
 });
+
+
+
+test("should show hotel detail", async ({ page }) => {
+  await page.goto(UI_URL)
+  await page
+    .getByRole("link", {
+      name: "Sign In",
+    })
+    .click();
+
+  await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
+
+  await page.locator("[name=email]").fill("nethmi@gmail.com");
+
+  await page.locator("[name=password]").fill("123456");
+
+  await page.getByRole("button", { name: "Login" }).click();
+
+
+  await page.getByPlaceholder("where are you going ?").fill("Dublin");
+  await page.getByRole("button", { name: "Search" }).click();
+  await page.getByText("Dublin Getaways updated").click();
+
+  await expect(page).toHaveURL(/detail/);
+  // make sure url has detail word inside it
+  await expect(page.getByText("Book Now")).toBeVisible();
+});

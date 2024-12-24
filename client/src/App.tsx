@@ -11,6 +11,7 @@ import { AddHotel } from "./pages/AddHotel";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
+import Details from "./pages/Details";
 
 function App() {
   const toast = useAppSeleter((state: RootState) => state.toasts);
@@ -66,6 +67,14 @@ function App() {
           element={
             <Layouts>
               <Search />
+            </Layouts>
+          }
+        />
+        <Route
+          path="/detail/:hotelId"
+          element={
+            <Layouts>
+              <Details />
             </Layouts>
           }
         />
