@@ -27,12 +27,12 @@ export  interface SaveSearchValuesReducerPayloadInterface {
 }
 
 const initialState:IntialStateInterface = {
-    destination:"",
-    checkIn:new Date(),
-    checkOut:new Date(),
-    adultCount:0,
-    childCount:0,
-    hotelId:"",
+    destination: sessionStorage.getItem("destination") || "",
+    checkIn: new Date(sessionStorage.getItem("checkIn")|| new Date().toISOString()),
+    checkOut:new Date(sessionStorage.getItem("checkOut") ||  new Date().toISOString()),
+    adultCount: parseInt(sessionStorage.getItem("adultCount")|| "1") ,
+    childCount: parseInt(sessionStorage.getItem("childCount") || "0") ,
+    hotelId: sessionStorage.getItem("hotelId") ||"",
 
 }
 
@@ -46,6 +46,14 @@ export const searchSlice = createSlice({
             state.checkOut = action.payload.checkOut;
             state.adultCount = action.payload.adultCount;
             state.childCount = action.payload.childCount;
+            state.hotelId = action.payload.hotelId || ""
+
+            sessionStorage.setItem("destination",action.payload.destination)
+            sessionStorage.setItem("checkIn",action.payload.checkIn.toISOString())
+            sessionStorage.setItem("checkOut",action.payload.checkOut.toISOString())
+            sessionStorage.setItem("adultCount",action.payload.adultCount.toString())
+            sessionStorage.setItem("childCount",action.payload.childCount.toString())
+            sessionStorage.setItem("hotelId",action.payload.hotelId || "")
 
             return state;
         }
