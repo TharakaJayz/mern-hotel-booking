@@ -49,7 +49,7 @@ function App() {
             <Route
               path="/add-hotel"
               element={
-                <Layouts>
+                <Layouts isNotSearch = { true }>
                   <AddHotel />
                 </Layouts>
               }
@@ -65,7 +65,7 @@ function App() {
             <Route
               path="/edit-hotel/:hotelId"
               element={
-                <Layouts>
+                <Layouts isNotSearch = { true }>
                   <EditHotel />
                 </Layouts>
               }
