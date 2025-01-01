@@ -12,6 +12,9 @@ import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
 import Details from "./pages/Details";
+import Booking from "./pages/Booking";
+import Home from "./pages/Home";
+import MyBooking from "./pages/MyBooking";
 
 function App() {
   const toast = useAppSeleter((state: RootState) => state.toasts);
@@ -36,6 +39,14 @@ function App() {
         {true && (
           <>
             <Route
+              path="/hotel/:hotelId/booking"
+              element={
+                <Layouts>
+                  <Booking />
+                </Layouts>
+              }
+            />
+            <Route
               path="/add-hotel"
               element={
                 <Layouts>
@@ -56,6 +67,14 @@ function App() {
               element={
                 <Layouts>
                   <EditHotel />
+                </Layouts>
+              }
+            />
+            <Route
+              path="/my-bookings"
+              element={
+                <Layouts isNotSearch = { true }>
+                  <MyBooking  />
                 </Layouts>
               }
             />
@@ -81,7 +100,7 @@ function App() {
         <Route
           path="/register"
           element={
-            <Layouts>
+            <Layouts isNotSearch = { true }>
               <Register />
             </Layouts>
           }
@@ -89,7 +108,7 @@ function App() {
         <Route
           path="/sign-in"
           element={
-            <Layouts>
+            <Layouts isNotSearch = { true }>
               <SignIn />
             </Layouts>
           }
@@ -98,8 +117,8 @@ function App() {
         <Route
           path="/"
           element={
-            <Layouts>
-              <p>home page</p>
+            <Layouts isNotSearch = { true }>
+            <Home />
             </Layouts>
           }
         />
