@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form";
 import { UserType } from "../../../../server/src/shared/types";
-
+import { useAppSeleter } from "../../hooks/hooks";
+import { RootState } from "../../store/store";
+import { useParams } from "react-router-dom";
+import * as apiClient from "../../api-client";
+import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 interface Props {
   currentUser: UserType;
 }
@@ -11,28 +16,69 @@ type BookingFormData = {
 };
 
 const BookingForm = ({ currentUser }: Props) => {
-  const { register } = useForm<BookingFormData>({defaultValues:{
-    email:currentUser.email , firstName:currentUser.firstName , lastName:currentUser.lastName
-  }});
-  return <form className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
-    <span className="text-3xl font-bold">Confirm Your Details</span>
-    <div className="grid grid-cols-2 gap-6">
-        <label className="text-gray-700 text-sm font-bold flex-1">FirstName
-
-            <input type="text" className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal" readOnly disabled {...register("firstName")} />
+  const searchData = useAppSeleter((state: RootState) => state.search);
+  const { hotelId } = useParams();
+  const [numberOfNights, setNumberOfNights] = useState<number>(0);
+  
+  useEffect(() => {
+    if (searchData.checkIn && searchData.checkOut) {
+      const nights =
+        Math.abs(searchData.checkOut.getTime() - searchData.checkIn.getTime()) /
+        (1000 * 60 * 60 * 24); // converting to days
+      setNumberOfNights(Math.ceil(nights));
+    }
+  }, [searchData.checkIn, searchData.checkOut]);
+  const { data: hotel } = useQuery(
+    "getHotelById",
+    () => apiClient.fetchHotelById(hotelId as string),
+    {
+      enabled: !!hotelId,
+    }
+  );
+  const { register } = useForm<BookingFormData>({
+    defaultValues: {
+      email: currentUser.email,
+      firstName: currentUser.firstName,
+      lastName: currentUser.lastName,
+    },
+  });
+  return (
+    <form className="grid grid-cols-1 gap-5 rounded-lg border border-slate-300 p-5">
+      <span className="text-3xl font-bold">Confirm Your Details</span>
+      <div className="grid grid-cols-2 gap-6">
+        <label className="text-gray-700 text-sm font-bold flex-1">
+          FirstName
+          <input
+            type="text"
+            className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal"
+            readOnly
+            disabled
+            {...register("firstName")}
+          />
         </label>
-        <label className="text-gray-700 text-sm font-bold flex-1">LastName
-
-            <input type="text" className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal" readOnly disabled {...register("lastName")} />
+        <label className="text-gray-700 text-sm font-bold flex-1">
+          LastName
+          <input
+            type="text"
+            className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal"
+            readOnly
+            disabled
+            {...register("lastName")}
+          />
         </label>
-        <label className="text-gray-700 text-sm font-bold flex-1">Email
-
-            <input type="text" className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal" readOnly disabled {...register("email")} />
+        <label className="text-gray-700 text-sm font-bold flex-1">
+          Email
+          <input
+            type="text"
+            className="mt-1 border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 font-normal"
+            readOnly
+            disabled
+            {...register("email")}
+          />
         </label>
-
-    </div>
-
-  </form>;
+      </div>
+    </form>
+  );
 };
 
 export default BookingForm;
