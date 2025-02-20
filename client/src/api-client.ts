@@ -1,6 +1,11 @@
 import { RegisterFormData } from "./pages/Register";
 import { LoginFormData } from "./pages/SignIn";
-import { HotelSearchResponse, HotelType, UserType } from "../../server/src/shared/types";
+import {
+  HotelSearchResponse,
+  HotelType,
+  PaymentIntentResponse,
+  UserType,
+} from "../../server/src/shared/types";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const register = async (formData: RegisterFormData) => {
@@ -41,18 +46,17 @@ export const signIn = async (formData: LoginFormData) => {
   return responseBody;
 };
 
+export const fetchCurrentUser = async (): Promise<UserType> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+    credentials: "include",
+  });
 
-export const fetchCurrentUser = async ():Promise<UserType>=>{
-  const response = await fetch(`${API_BASE_URL}/api/users/me`,{
-    credentials:"include"
-  })
-
-  if(!response){
+  if (!response) {
     throw new Error("Error fetching user");
   }
 
   return response.json();
-}
+};
 export const logOut = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     credentials: "include",
@@ -176,11 +180,33 @@ export const searchHotels = async (
   return response.json();
 };
 
-export const fetchHotelById = async (hotelId:string):Promise<HotelType> =>{
-  const response =  await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`);
-  if(!response.ok){
-    throw new Error("Error fetching hotel for id")
+export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
+  const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`);
+  if (!response.ok) {
+    throw new Error("Error fetching hotel for id");
   }
 
-  return response.json()
-} 
+  return response.json();
+};
+
+export const createPaymentIntent = async (
+  hotelId: string,
+  numberOfNights: string
+):Promise<PaymentIntentResponse> => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${hotelId}/payment-intent`,
+    {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({ numberOfNights }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error creating payment intent");
+  }
+  return response.json();
+};

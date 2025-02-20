@@ -1,13 +1,18 @@
 import { useForm } from "react-hook-form";
-import { UserType } from "../../../../server/src/shared/types";
+import {
+  PaymentIntentResponse,
+  UserType,
+} from "../../../../server/src/shared/types";
 import { useAppSeleter } from "../../hooks/hooks";
 import { RootState } from "../../store/store";
 import { useParams } from "react-router-dom";
 import * as apiClient from "../../api-client";
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
+import { CardElement } from "@stripe/react-stripe-js";
 interface Props {
   currentUser: UserType;
+  paymentIntent: PaymentIntentResponse;
 }
 type BookingFormData = {
   firstName: string;
@@ -15,11 +20,11 @@ type BookingFormData = {
   email: string;
 };
 
-const BookingForm = ({ currentUser }: Props) => {
+const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const searchData = useAppSeleter((state: RootState) => state.search);
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
-  
+
   useEffect(() => {
     if (searchData.checkIn && searchData.checkOut) {
       const nights =
@@ -76,6 +81,25 @@ const BookingForm = ({ currentUser }: Props) => {
             {...register("email")}
           />
         </label>
+      </div>
+      <div className="space-y-2">
+        <h2 className="text-xl font-semibold">Your Price Summery</h2>
+        <div className="bg-blue-200 p-4 rounded-md">
+          <div className="font-semibold text-lg">
+            Total Cost:${paymentIntent.totalCost.toFixed(2)}
+          </div>
+          <div className="text-xs">Include taxes and charges</div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-xl font-semibold">
+          Payment Details
+          <CardElement
+            id="payment-element"
+            className="border rounded-md p-2 text-sm"
+          />
+        </h3>
       </div>
     </form>
   );
