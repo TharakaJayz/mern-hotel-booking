@@ -6,6 +6,7 @@ import {
   PaymentIntentResponse,
   UserType,
 } from "../../server/src/shared/types";
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const register = async (formData: RegisterFormData) => {
@@ -192,9 +193,9 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
 export const createPaymentIntent = async (
   hotelId: string,
   numberOfNights: string
-):Promise<PaymentIntentResponse> => {
+): Promise<PaymentIntentResponse> => {
   const response = await fetch(
-    `${API_BASE_URL}/api/hotels/${hotelId}/payment-intent`,
+    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
     {
       credentials: "include",
       method: "POST",
@@ -205,8 +206,30 @@ export const createPaymentIntent = async (
     }
   );
 
+  console.log("patmentIntenCreation response", response);
+
   if (!response.ok) {
     throw new Error("Error creating payment intent");
   }
   return response.json();
+};
+
+export const createRoomBooking = async (formData: BookingFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error creating booking");
+  }
+
+  
 };

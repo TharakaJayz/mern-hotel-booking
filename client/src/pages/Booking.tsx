@@ -13,7 +13,7 @@ const Booking = () => {
   const { stripePromise } = useAppSeleter((state) => state.payment);
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
-  console.log("nn", numberOfNights);
+  
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
       const diff = search.checkOut.getTime() - search.checkIn.getTime();
@@ -52,6 +52,8 @@ const Booking = () => {
     "fetchCurrectUser",
     apiClient.fetchCurrentUser
   );
+
+  
 
   if (!hotel) return <div>Loading...</div>;
 

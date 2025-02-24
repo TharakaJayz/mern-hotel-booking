@@ -5,7 +5,7 @@ import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 const router = express.Router();
 
 router.get("/search", async (req: Request, res: Response) => {
@@ -89,7 +89,7 @@ router.post(
     }
     const totalCost = hotel.pricePerNight * numberOfNights;
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalCost,
+      amount: totalCost * 100,
       currency: "usd",
       metadata: { hotelId, userId: req.userId },
     });
@@ -140,18 +140,20 @@ router.post(
         userId: req.userId,
       };
 
+      console.log("newBooking", newBooking);
       const hotel = await Hotel.findOneAndUpdate(
         { _id: req.params.hotelId },
         {
-          $push: { bookings: newBooking },
+          $push: { bookings: {...newBooking} },
         }
       );
-
+      // console.log("hotel after push", hotel);
       if (!hotel) {
         return res.status(404).json({ message: "Hotel not found" });
       }
 
       await hotel.save();
+      // console.log("hotel after save", hotel);
       res.status(200).json({ message: "Booking successful" });
     } catch (error) {
       console.log("Error in /:hotelId/bookings", error);
