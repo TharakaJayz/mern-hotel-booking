@@ -8,7 +8,6 @@ import { RootState } from "../../store/store";
 import { useParams } from "react-router-dom";
 import * as apiClient from "../../api-client";
 import { useMutation, useQuery } from "react-query";
-import { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { toastActions } from "../../store/Toast-slice";
@@ -31,23 +30,23 @@ export type BookingFormData = {
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const searchData = useAppSeleter((state: RootState) => state.search);
-  const toast = useAppSeleter((state: RootState) => state.toasts);
+  // const toast = useAppSeleter((state: RootState) => state.toasts);
   const dispatch = useAppDispatch();
   const stripe = useStripe();
 
   const elements = useElements();
   const { hotelId } = useParams();
-  const [numberOfNights, setNumberOfNights] = useState<number>(0);
+  // const [numberOfNights, setNumberOfNights] = useState<number>(0);
 
-  useEffect(() => {
-    if (searchData.checkIn && searchData.checkOut) {
-      const nights =
-        Math.abs(searchData.checkOut.getTime() - searchData.checkIn.getTime()) /
-        (1000 * 60 * 60 * 24); // converting to days
-      setNumberOfNights(Math.ceil(nights));
-    }
-  }, [searchData.checkIn, searchData.checkOut]);
-  const { data: hotel } = useQuery(
+  // useEffect(() => {
+  //   if (searchData.checkIn && searchData.checkOut) {
+  //     const nights =
+  //       Math.abs(searchData.checkOut.getTime() - searchData.checkIn.getTime()) /
+  //       (1000 * 60 * 60 * 24); // converting to days
+  //     setNumberOfNights(Math.ceil(nights));
+  //   }
+  // }, [searchData.checkIn, searchData.checkOut]);
+  useQuery(
     "getHotelById",
     () => apiClient.fetchHotelById(hotelId as string),
     {
