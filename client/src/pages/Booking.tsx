@@ -13,7 +13,7 @@ const Booking = () => {
   const { stripePromise } = useAppSeleter((state) => state.payment);
   const { hotelId } = useParams();
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
-  
+
   useEffect(() => {
     if (search.checkIn && search.checkOut) {
       const nights =
@@ -56,8 +56,6 @@ const Booking = () => {
     apiClient.fetchCurrentUser
   );
 
-  
-
   if (!hotel) return <div>Loading...</div>;
 
   return (
@@ -75,7 +73,10 @@ const Booking = () => {
           stripe={stripe}
           options={{ clientSecret: paymentIntentData.clientSecret }}
         >
-          <BookingForm currentUser={currentUser} paymentIntent = {paymentIntentData} />
+          <BookingForm
+            currentUser={currentUser}
+            paymentIntent={paymentIntentData}
+          />
         </Elements>
       )}
     </div>

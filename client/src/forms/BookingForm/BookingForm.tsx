@@ -30,7 +30,6 @@ export type BookingFormData = {
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const searchData = useAppSeleter((state: RootState) => state.search);
-  // const toast = useAppSeleter((state: RootState) => state.toasts);
   const dispatch = useAppDispatch();
   const stripe = useStripe();
 

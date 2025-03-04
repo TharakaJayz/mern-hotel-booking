@@ -74,7 +74,7 @@ const SearchBar = () => {
             <DatePicker  selected={checkIn}  onChange={(date)=>{setCheckIn(date as Date)}} selectStart = {checkIn}  endDate={checkOut} minDate={minDate} maxDate={maxDate} placeholderText="Check-in Date" className="min-w-full bg-white p-2 focus:outline-none"  wrapperClassName = "min-w-full"/>
         </div>
         <div>
-            <DatePicker  selected={checkOut}  onChange={(date)=>{setCheckOut(date as Date)}} selectStart = {checkIn}  endDate={checkOut} minDate={minDate} maxDate={maxDate} placeholderText="Check-in Date" className="min-w-full bg-white p-2 focus:outline-none"
+            <DatePicker  selected={checkOut}  onChange={(date)=>{setCheckOut(date as Date)}} selectStart = {checkIn}  endDate={checkOut} minDate={minDate} maxDate={maxDate} placeholderText="Check-out Date" className="min-w-full bg-white p-2 focus:outline-none"
                 wrapperClassName = "min-w-full"
                 />
         </div>
