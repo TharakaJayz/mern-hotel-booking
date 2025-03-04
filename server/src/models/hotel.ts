@@ -26,7 +26,7 @@ const bookingSchema = new mongoose.Schema<BookingType>({
     type: Date, // booking id ,
     required: true,
   },
-  CheckOut: {
+  checkOut: {
     type: Date, // booking id ,
     required: true,
   },

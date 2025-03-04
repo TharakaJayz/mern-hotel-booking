@@ -26,7 +26,7 @@ export type BookingType = {
   childCount: number;
   adultCount: number;
   checkIn: Date;
-  CheckOut: Date;
+  checkOut: Date;
   totalCost: number;
 
 };
