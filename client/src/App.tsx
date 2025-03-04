@@ -49,7 +49,7 @@ function App() {
             <Route
               path="/add-hotel"
               element={
-                <Layouts isNotSearch = { true }>
+                <Layouts isNotSearch={true}>
                   <AddHotel />
                 </Layouts>
               }
@@ -65,7 +65,7 @@ function App() {
             <Route
               path="/edit-hotel/:hotelId"
               element={
-                <Layouts isNotSearch = { true }>
+                <Layouts isNotSearch={true}>
                   <EditHotel />
                 </Layouts>
               }
@@ -73,8 +73,8 @@ function App() {
             <Route
               path="/my-bookings"
               element={
-                <Layouts isNotSearch = { true }>
-                  <MyBooking  />
+                <Layouts isNotSearch={true}>
+                  <MyBooking />
                 </Layouts>
               }
             />
@@ -100,7 +100,7 @@ function App() {
         <Route
           path="/register"
           element={
-            <Layouts isNotSearch = { true }>
+            <Layouts isNotSearch={true}>
               <Register />
             </Layouts>
           }
@@ -108,7 +108,7 @@ function App() {
         <Route
           path="/sign-in"
           element={
-            <Layouts isNotSearch = { true }>
+            <Layouts isNotSearch={true}>
               <SignIn />
             </Layouts>
           }
@@ -117,8 +117,8 @@ function App() {
         <Route
           path="/"
           element={
-            <Layouts isNotSearch = { true }>
-            <Home />
+            <Layouts isNotSearch={true}>
+              {isLoggedIn ? <MyHotels /> : <Home />}
             </Layouts>
           }
         />
